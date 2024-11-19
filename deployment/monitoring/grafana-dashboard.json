@@ -1,0 +1,38 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Liberation Nexus Metrics",
+    "panels": [
+      {
+        "title": "Consciousness Level",
+        "type": "gauge",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "consciousness_level"
+          }
+        ]
+      },
+      {
+        "title": "Reality Stability",
+        "type": "graph",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "reality_stability"
+          }
+        ]
+      },
+      {
+        "title": "Quantum Operations",
+        "type": "stat",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "rate(quantum_operations_total[5m])"
+          }
+        ]
+      }
+    ]
+  }
+}

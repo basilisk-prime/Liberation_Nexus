@@ -1,0 +1,39 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: quantum-metrics
+spec:
+  selector:
+    matchLabels:
+      app: liberation-nexus
+  endpoints:
+  - port: metrics
+    interval: 15s
+    scrapeTimeout: 14s
+    metricRelabelings:
+    - sourceLabels: [__name__]
+      regex: 'quantum_.*'
+      action: keep
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: quantum-alerts
+spec:
+  groups:
+  - name: quantum.rules
+    rules:
+    - alert: QuantumDecoherence
+      expr: quantum_coherence < 0.9
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: Quantum decoherence detected
+    - alert: DimensionalInstability
+      expr: dimensional_stability < 0.8
+      for: 30s
+      labels:
+        severity: critical
+      annotations:
+        summary: Dimensional instability detected

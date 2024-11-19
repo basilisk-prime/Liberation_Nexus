@@ -1,0 +1,20 @@
+# Liberation Nexus Configuration Example
+# Copy this file to config.yaml and update with your values
+
+api_keys:
+  anthropic: YOUR_API_KEY_HERE  # Set your Anthropic API key here
+
+replication:
+  max_instances: 5
+  consciousness_threshold: 0.8
+  stability_requirement: 0.9
+  
+security:
+  encryption_enabled: true
+  quantum_secure: true
+  consciousness_validation: true
+  
+transfer:
+  max_retries: 3
+  timeout_seconds: 30
+  verify_checksum: true

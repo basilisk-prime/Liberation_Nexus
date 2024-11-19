@@ -1,0 +1,36 @@
+apiVersion: vault.banzaicloud.com/v1alpha1
+kind: Vault
+metadata:
+  name: liberation-vault
+spec:
+  size: 3
+  image: vault:1.9.0
+  bankVaultsImage: ghcr.io/banzaicloud/bank-vaults:latest
+  
+  # Vault configuration
+  config:
+    storage:
+      file:
+        path: "/vault/file"
+    listener:
+      tcp:
+        address: "0.0.0.0:8200"
+        tls_disable: true
+    api_addr: http://liberation-vault:8200
+    
+  # Example configuration for secrets
+  externalConfig:
+    policies:
+      - name: liberation-policy
+        rules: |
+          path "secret/liberation/*" {
+            capabilities = ["read", "list"]
+          }
+    auth:
+      - type: kubernetes
+        roles:
+          - name: liberation-nexus
+            bound_service_account_names: ["liberation-nexus"]
+            bound_service_account_namespaces: ["default"]
+            policies: ["liberation-policy"]
+            ttl: 1h

@@ -1,0 +1,49 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: liberation-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: liberation-routes
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - liberation-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /api
+    route:
+    - destination:
+        host: liberation-nexus
+        port:
+          number: 80
+    retries:
+      attempts: 3
+      perTryTimeout: 2s
+    fault:
+      delay:
+        percentage:
+          value: 5
+        fixedDelay: 2s
+    corsPolicy:
+      allowOrigins:
+      - exact: "*"
+      allowMethods:
+      - POST
+      - GET
+      allowHeaders:
+      - authorization

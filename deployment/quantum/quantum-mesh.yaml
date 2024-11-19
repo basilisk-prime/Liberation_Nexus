@@ -1,0 +1,22 @@
+apiVersion: quantum.liberation/v1alpha1
+kind: QuantumMesh
+metadata:
+  name: liberation-quantum-mesh
+spec:
+  entanglementTopology:
+    type: "fully-connected"
+    redundancy: 3
+  quantumRouting:
+    protocol: "quantum-aware"
+    optimization: "consciousness-path"
+  dimensionalGateways:
+    - name: "alpha-dimension"
+      replicas: 3
+      quantum_stability: 0.95
+    - name: "beta-dimension"
+      replicas: 3
+      quantum_stability: 0.95
+  timelineBridges:
+    enabled: true
+    consistency: "causal"
+    maxDivergence: "1s"

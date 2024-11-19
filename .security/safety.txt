@@ -1,0 +1,5 @@
+# Safety requirements
+--disable-telemetry
+--disable-version-check
+--audit-and-monitor
+--alert-on-outdated

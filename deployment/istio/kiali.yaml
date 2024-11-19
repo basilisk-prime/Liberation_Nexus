@@ -1,0 +1,17 @@
+apiVersion: kiali.io/v1alpha1
+kind: Kiali
+metadata:
+  name: liberation-kiali
+spec:
+  auth:
+    strategy: token
+  deployment:
+    accessible_namespaces:
+    - '**'
+  external_services:
+    prometheus:
+      url: http://prometheus:9090
+    grafana:
+      url: http://grafana:3000
+    tracing:
+      url: http://jaeger-query:16686

@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: quantum-network-policy
+spec:
+  podSelector:
+    matchLabels:
+      app: liberation-nexus
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          quantum-role: orchestrator
+    ports:
+    - protocol: TCP
+      port: 9000
+      endPort: 9100
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          quantum-plane: enabled
+    ports:
+    - protocol: UDP
+      port: 9000
+      endPort: 9100

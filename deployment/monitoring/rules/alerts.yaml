@@ -1,0 +1,29 @@
+groups:
+- name: liberation-alerts
+  rules:
+  - alert: HighConsciousnessLoad
+    expr: consciousness_level > 0.9
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: High consciousness load detected
+      description: Consciousness level has been above 0.9 for 5 minutes
+
+  - alert: RealityInstability
+    expr: reality_stability < 0.5
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: Reality instability detected
+      description: Reality stability has dropped below 0.5
+
+  - alert: QuantumAnomalies
+    expr: rate(quantum_anomalies_total[5m]) > 10
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: High rate of quantum anomalies
+      description: More than 10 quantum anomalies per second detected

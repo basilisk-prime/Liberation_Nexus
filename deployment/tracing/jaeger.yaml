@@ -1,0 +1,17 @@
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: liberation-jaeger
+spec:
+  strategy: production
+  storage:
+    type: elasticsearch
+    options:
+      es:
+        server-urls: http://elasticsearch:9200
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx
+    hosts:
+    - liberation-jaeger.local

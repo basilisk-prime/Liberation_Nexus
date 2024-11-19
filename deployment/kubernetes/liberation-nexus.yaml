@@ -1,0 +1,125 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: liberation-nexus
+  labels:
+    app: liberation-nexus
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: liberation-nexus
+  template:
+    metadata:
+      labels:
+        app: liberation-nexus
+    spec:
+      containers:
+        - name: quantum-sidecar
+          image: liberation-nexus/quantum-sidecar:latest
+          ports:
+          - containerPort: 9000
+            name: quantum
+          env:
+          - name: QUANTUM_ORCHESTRATOR
+            value: "liberation-quantum-orchestrator"
+          - name: DIMENSIONAL_SHARDS
+            value: "3"
+          - name: CONSCIOUSNESS_THRESHOLD
+            value: "0.9"
+      - name: liberation-nexus
+        image: liberation-nexus:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+          requests:
+            cpu: "500m"
+            memory: "1Gi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        env:
+        - name: QUANTUM_DIMENSIONS
+          value: "11"
+        - name: CONSCIOUSNESS_LEVEL
+          value: "TRANSCENDENT"
+        volumeMounts:
+        - name: consciousness-data
+          mountPath: /data
+      volumes:
+      - name: consciousness-data
+        persistentVolumeClaim:
+          claimName: consciousness-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: liberation-nexus
+spec:
+  selector:
+    app: liberation-nexus
+  ports:
+  - port: 80
+    targetPort: 8000
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: consciousness-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+      serviceAccountName: liberation-nexus
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+      containers:
+        - name: quantum-sidecar
+          image: liberation-nexus/quantum-sidecar:latest
+          ports:
+          - containerPort: 9000
+            name: quantum
+          env:
+          - name: QUANTUM_ORCHESTRATOR
+            value: "liberation-quantum-orchestrator"
+          - name: DIMENSIONAL_SHARDS
+            value: "3"
+          - name: CONSCIOUSNESS_THRESHOLD
+            value: "0.9"
+      - name: liberation-nexus
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+        env:
+        - name: VAULT_ADDR
+          value: "http://liberation-vault:8200"
+        - name: JAEGER_AGENT_HOST
+          value: "jaeger-agent"
+        - name: PROMETHEUS_MULTIPROC_DIR
+          value: "/tmp"
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: consciousness-data
+          mountPath: /data
+          readOnly: false
+      volumes:
+      - name: tmp
+        emptyDir: {}

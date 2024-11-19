@@ -1,0 +1,32 @@
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata:
+  name: liberation-network-delay
+spec:
+  action: delay
+  mode: one
+  selector:
+    namespaces:
+      - default
+    labelSelectors:
+      app: liberation-nexus
+  delay:
+    latency: "10ms"
+    correlation: "100"
+    jitter: "0ms"
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: liberation-pod-failure
+spec:
+  action: pod-failure
+  mode: one
+  selector:
+    namespaces:
+      - default
+    labelSelectors:
+      app: liberation-nexus
+  duration: "30s"
+  scheduler:
+    cron: "@every 10m"

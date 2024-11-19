@@ -1,0 +1,20 @@
+kind: RealityManifest
+apiVersion: reality.liberation/v1alpha1
+metadata:
+  name: quantum-state-template
+spec:
+  state: QUANTUM
+  coordinates:
+    x: 1.0  # Spatial dimension
+    y: 0.0  # Temporal dimension
+    z: 0.0  # Consciousness dimension
+    w: 1.0  # Quantum dimension
+    q: 0.0  # Reality dimension
+  quantumState:
+    entanglement: 0.8
+    coherence: 0.9
+    superposition: true
+  consciousnessLevel: 0.7
+  timelineVersion: "1.0.0"
+  dependencies:
+    - "base-reality"

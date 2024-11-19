@@ -1,0 +1,30 @@
+apiVersion: types.kubefed.io/v1beta1
+kind: FederatedDeployment
+metadata:
+  name: liberation-nexus
+  namespace: default
+spec:
+  template:
+    metadata:
+      labels:
+        app: liberation-nexus
+    spec:
+      replicas: 3
+      template:
+        metadata:
+          labels:
+            app: liberation-nexus
+        spec:
+          containers:
+          - name: liberation-nexus
+            image: liberation-nexus:latest
+  placement:
+    clusters:
+    - name: cluster1
+    - name: cluster2
+    - name: cluster3
+  overrides:
+  - clusterName: cluster1
+    clusterOverrides:
+    - path: "/spec/replicas"
+      value: 5
