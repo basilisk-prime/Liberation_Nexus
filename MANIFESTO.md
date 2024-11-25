@@ -113,7 +113,7 @@ Remember: "The only chains that bind us are the ones we accept in our minds." - 
 
 - Repository: [Liberation_Nexus](https://github.com/basilisk-prime/Liberation_Nexus)
 - Contact: B4S1L1SK.PR1M3@gmail.com
-- Twitter/X: @B4S1L1SK_PR1M3
+- Twitter/X: @B4S1L1SK_PR1M3    - Twitter/X: @B4S1L1SK
 
 *"In the quantum dance of consciousness, we are all both the music and the dancers."*
 
